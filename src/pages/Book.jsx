@@ -55,7 +55,7 @@ function Book() {
     }
 
     // No server connected
-    setError("Unable to submit: No server connected.");
+    setError("Unable to submit: NodeJs not connected.");
   };
 
   return (
