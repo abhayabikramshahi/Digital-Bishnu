@@ -1,16 +1,37 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Kk from './pages/Kk';
+// App.js
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
+
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Refer from "./pages/Refer";
+import Book from "./pages/Book";
+import PageNotFound from "./pages/PageNotFound";
+
+import "./App.css";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/kk" element={<Kk />} />
-      </Routes>
-    </BrowserRouter>
+    <React.StrictMode>
+      <BrowserRouter>
+        {/* Navbar (fixed top) */}
+        <Navbar />
+
+        {/* Page Routes */}
+        <main className="pt-20 bg-black min-h-screen">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/refer" element={<Refer />} />
+            <Route path="/book" element={<Book />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </main>
+
+        {/* Analytics */}
+        <Analytics />
+      </BrowserRouter>
+    </React.StrictMode>
   );
 }
 
