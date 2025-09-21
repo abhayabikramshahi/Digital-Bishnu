@@ -22,7 +22,11 @@ function App() {
         <main className="pt-20 bg-black min-h-screen">
           <Routes>
             <Route path="/" element={<Home />} />
+            
+            {/* Referral system */}
             <Route path="/refer" element={<Refer />} />
+            <Route path="/refer/:id" element={<Refer />} /> {/* ✅ added */}
+
             <Route path="/book" element={<Book />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
