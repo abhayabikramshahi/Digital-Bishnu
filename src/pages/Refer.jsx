@@ -1,102 +1,96 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, { useState } from 'react';
 
 function Refer() {
-  const navigate = useNavigate();
-  const { id } = useParams();
+  const [referralCode, setReferralCode] = useState('AFFILHUB123'); // Example code
+  const [copied, setCopied] = useState(false);
 
-  const [referralLink, setReferralLink] = useState("");
-  const [copied, setCopied] = useState(false); // <-- declare copied state
-  const expiryDate = "31 Dec 2025";
-
-  useEffect(() => {
-    if (id) navigate("/");
-  }, [id, navigate]);
-
-  const generateLink = () => {
-    const randomId = Math.random().toString(36).substring(2, 10).toUpperCase();
-    const newLink = `https://digital-bishnu.vercel.app/refer/${randomId}`;
-    setReferralLink(newLink);
-    setCopied(false); // reset copied state
-  };
-
-  const copyLink = () => {
-    if (referralLink) {
-      navigator.clipboard.writeText(referralLink);
-      setCopied(true); // <-- use lowercase true
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
-  const handleInvite = () => {
-    navigate("/book");
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(referralCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000); // Reset after 2s
   };
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] flex flex-col justify-center items-center text-gray-200 px-4 sm:px-6 lg:px-8 py-12">
-      <section className="text-center w-full max-w-3xl">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight">
-          Refer & <span className="text-red-500">Earn Rewards</span>
-        </h1>
-        <p className="mt-4 text-sm sm:text-base md:text-lg text-gray-400 px-2 sm:px-0">
-          Generate your unique referral link and share it with friends. When they join{" "}
-          <span className="text-white font-semibold">DIGITAL BISHNU</span>, you earn rewards instantly.
-        </p>
-
-        <div className="mt-10 bg-gray-900 border border-gray-700 rounded-xl p-6 sm:p-8 shadow-lg hover:shadow-2xl transition">
-          <p className="text-lg font-semibold text-white mb-3">Your Referral Link</p>
-
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-            <input
-              type="text"
-              value={referralLink}
-              readOnly
-              placeholder="Click Generate to get your link"
-              className="flex-1 bg-black border border-gray-700 rounded-md px-4 py-2 text-red-400 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm sm:text-base"
-            />
-            <div className="flex gap-2 mt-2 sm:mt-0">
-              <button
-                onClick={generateLink}
-                className="flex-1 cursor-pointer sm:flex-none bg-red-500 text-white px-4 py-2 rounded-md font-medium hover:bg-red-600 transition-colors text-sm sm:text-base"
-              >
-                Generate
-              </button>
-              <button
-                onClick={copyLink}
-                disabled={!referralLink}
-                className="flex-1 sm:flex-none bg-gray-700 text-white px-4 py-2 rounded-md font-medium hover:bg-gray-600 transition-colors disabled:opacity-50 text-sm sm:text-base"
-              >
-                {copied ? "Copied!" : "Copy"}
-              </button>
-            </div>
-          </div>
-
-          <p className="mt-4 text-sm text-gray-400">
-            <span className="font-medium">Expiry Date:</span>{" "}
-            <span className="text-white">{expiryDate}</span>
+    <div className="bg-gray-50 min-h-screen font-sans">
+      {/* Header */}
+      <section className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-16 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Invite Friends & Earn Rewards
+          </h1>
+          <p className="text-gray-700 mb-6 text-sm sm:text-base md:text-lg">
+            Share your referral code and help others start learning affiliate marketing. Earn exciting rewards when they join!
           </p>
-          <p className="mt-3 text-xs sm:text-sm text-gray-500">
-            Tip: Share your link on social media or directly with friends to maximize your rewards.
-          </p>
-        </div>
-
-        <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-          <button
-            onClick={handleInvite}
-            disabled={!referralLink}
-            className="w-full sm:w-auto bg-red-500 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-red-600 transition-colors disabled:opacity-50 text-sm sm:text-base"
-          >
-            Invite Friends
-          </button>
-          <Link
-            to="/"
-            className="w-full sm:w-auto border border-gray-500 text-gray-300 px-6 py-3 rounded-lg font-semibold hover:border-red-500 hover:text-red-400 transition-colors text-center text-sm sm:text-base"
-          >
-            Go Home
-          </Link>
         </div>
       </section>
-    </main>
+
+      {/* Referral Code Section */}
+      <section className="py-12">
+        <div className="max-w-md mx-auto bg-white p-6 rounded-xl shadow text-center">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+            Your Referral Code
+          </h2>
+          <div className="flex items-center justify-center space-x-4 mb-4">
+            <span className="text-red-600 font-bold text-lg md:text-xl">{referralCode}</span>
+            <button
+              onClick={copyToClipboard}
+              className="bg-red-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-red-700 transition-colors"
+            >
+              {copied ? 'Copied!' : 'Copy'}
+            </button>
+          </div>
+          <p className="text-gray-600 text-sm">
+            Share this code with friends or on social media to invite others.
+          </p>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-12 md:py-20">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
+            How It Works
+          </h2>
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition transform hover:-translate-y-1 sm:hover:-translate-y-2">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-red-600">Share Your Code</h3>
+              <p className="text-gray-700 text-sm sm:text-base">
+                Copy your referral code and share it with friends, family, or on social media.
+              </p>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition transform hover:-translate-y-1 sm:hover:-translate-y-2">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-red-600">They Sign Up</h3>
+              <p className="text-gray-700 text-sm sm:text-base">
+                Your friends use your referral code when signing up for courses at AffilHub Nepal.
+              </p>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition transform hover:-translate-y-1 sm:hover:-translate-y-2">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-red-600">Earn Rewards</h3>
+              <p className="text-gray-700 text-sm sm:text-base">
+                Every successful referral earns you points, discounts, or exclusive perks.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="bg-red-600 text-white py-12 md:py-20 text-center">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+          Start Referring Now!
+        </h2>
+        <p className="mb-6 text-sm sm:text-base md:text-lg">
+          Invite as many friends as you want and maximize your rewards.
+        </p>
+        <button
+          onClick={copyToClipboard}
+          className="bg-white text-red-600 px-6 py-2 sm:px-8 sm:py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors"
+        >
+          Copy Referral Code
+        </button>
+      </section>
+
+    </div>
   );
 }
 
